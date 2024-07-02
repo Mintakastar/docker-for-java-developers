@@ -1,0 +1,3 @@
+THIS IS A FILE OUTSIDE THE CONTAINER, THIS IS ON HOST VOLUME
+
+Hello from the container
