@@ -3,7 +3,7 @@ this is part of this linked in course: https://www.linkedin.com/learning/introdu
 
 
 
-volumes examples
+# Volumes examples
 
 
 run for the host volumes  ( no build needed, just run on the fly)
@@ -13,7 +13,7 @@ run for the host volumes  ( no build needed, just run on the fly)
     alpine : this is the docker image to use
 
 
-<H1>HOST VOLUME</H1>
+## HOST VOLUME
 
     docker run -itd  --name host-volume-app -v ${PWD}/dockerfile-demos/volumes/my-host-folder:/container-folder alpine
 
@@ -33,11 +33,11 @@ This is to write on the file
     exit
 
 
-<H1>ANONYMOUS VOLUME</H1>
+## ANONYMOUS VOLUME
 
     docker run -itd  --name ANON-volume-app -v /container-folder alpine
 
-<H1>NAME VOLUME</H1>
+## NAMED VOLUME
 
     docker run -itd  --name name-volume-app -v bob:/container-folder alpine
 
@@ -56,3 +56,47 @@ Create a file in each volume
     docker exec -it name-volume-app touch /container-folder/named-file
 
 you can go for docker desktop UI and see the docker volumes there
+
+
+# PORT EXAMPLES
+
+    cd dockerfile-demos/portdemo/
+    ./mvnw package
+    java -jar  target/portdemo-0.0.1-SNAPSHOT.jar 
+    
+    #into another terminal
+        curl localhost:8080/actuator/health
+    #prints
+        {"status":"UP"}
+
+docker code to run the example
+
+8080:8080  : first 8080 is our host, second are from container ( default spring boot app )
+
+    docker build -t portdemo .
+    docker run -itd --name portdemo-app portdemo
+    
+    #into another terminal
+        curl localhost:8080/actuator/health
+    #prints
+        curl: (7) Failed to connect to localhost port 8080 after 0 ms: Connection refused
+
+exposing
+
+    #do another example exposing the port
+    docker run -p 8080:8080 -itd --name portdemo-app80 portdemo
+
+    #into another terminal
+        curl localhost:8080/actuator/health
+    #prints
+        {"status":"UP"}
+
+exposing
+
+    #do another example exposing the port
+    docker run -p 9090:8080 -itd --name portdemo-app90 portdemo
+
+    #into another terminal
+        curl localhost:9090/actuator/health
+    #prints
+        {"status":"UP"}
