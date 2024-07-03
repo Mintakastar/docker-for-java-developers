@@ -100,3 +100,15 @@ exposing
         curl localhost:9090/actuator/health
     #prints
         {"status":"UP"}
+
+# docker registry
+   #already logged in
+    
+    docker pull alpine:latest
+    docker tag docker.io/library/alpine:latest docker.io/raffenio/alpine:me
+    docker push docker.io/raffenio/alpine:me
+    --login
+    docker push docker.io/raffenio/alpine:me
+    --remove all images
+    docker pull raffenio/alpine:me
+    
